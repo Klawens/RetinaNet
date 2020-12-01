@@ -32,4 +32,5 @@ class Box_Subnet(nn.Module):
 
         # out is B x C x W x H, C = num_anchors * 4
         out = out.permute(0, 2, 3, 1)
-        return out
+
+        return out.contiguous().view(out.shape[0], -1, 4)

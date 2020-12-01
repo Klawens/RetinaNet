@@ -28,6 +28,7 @@ class Class_Subnet(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
+
         out = self.conv1(x)
         out = self.relu(out)
 
@@ -48,4 +49,6 @@ class Class_Subnet(nn.Module):
 
         batch_size, width, height, channels = out.shape
 
-        return None
+        out = out.view(batch_size, width, height, self.num_anchors, self.num_classes)
+
+        return out.contiguous().view(x.shape[0], -1, self.num_classes)
